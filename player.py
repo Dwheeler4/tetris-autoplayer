@@ -13,15 +13,18 @@ DEFAULT_WEIGHTS = {
     "lines_weight": 2.0,
     "potential_weight": 8.6,
     "lookahead_weight": 0.45,
+
+    # New heuristic weights
+    "well_weight": 2.5,
+    "transition_weight": 0.2,
+    "hole_depth_weight": 0.5,
 }
 
 
 # === HELPER FUNCTIONS ===
 def max_height(test_board):
-    # BUGFIX: when board is empty, default was 0 making height = board.height
     min_y = min((y for (_, y) in test_board.cells), default=test_board.height)
-    height = test_board.height - min_y
-    return height
+    return test_board.height - min_y
 
 
 def build_tetris(board, move, block_type, lines_cleared_count):
@@ -55,8 +58,7 @@ def bumpiness(test_board):
     for x in range(test_board.width - 1):
         thisheight = min((y for (cx, y) in test_board.cells if cx == x), default=test_board.height)
         nextheight = min((y for (cx, y) in test_board.cells if cx == x + 1), default=test_board.height)
-        difference = abs(thisheight - nextheight)
-        total += difference
+        total += abs(thisheight - nextheight)
     return total
 
 
@@ -70,6 +72,41 @@ def holes(test_board):
             if (x, y) not in test_board.cells:
                 hole_count += 1
     return hole_count
+
+
+# === NEW HEURISTICS ===
+def right_well_score(board):
+    width, height = board.width, board.height
+    col_heights = [
+        height - min((y for (cx, y) in board.cells if cx == x), default=height)
+        for x in range(width)
+    ]
+    right_well_depth = max(0, max(col_heights[:-1]) - col_heights[-1])
+    blocked = any((width - 1, y) in board.cells for y in range(height - right_well_depth, height))
+    if blocked:
+        return -5 * right_well_depth
+    return +2 * right_well_depth
+
+
+def row_col_transitions(board):
+    grid = [[(x, y) in board.cells for x in range(board.width)] for y in range(board.height)]
+    row_trans = sum(sum(grid[y][x] != grid[y][x + 1] for x in range(board.width - 1)) for y in range(board.height))
+    col_trans = sum(sum(grid[y][x] != grid[y + 1][x] for y in range(board.height - 1)) for x in range(board.width))
+    return row_trans + col_trans
+
+
+def hole_depth_penalty(board):
+    height = board.height
+    total = 0
+    for x in range(board.width):
+        col = sorted([y for (cx, y) in board.cells if cx == x])
+        if not col:
+            continue
+        top_y = col[0]
+        for y in range(top_y, height):
+            if (x, y) not in board.cells:
+                total += (height - y)
+    return total
 
 
 def score_to_lines(score):
@@ -214,7 +251,6 @@ def score_moves(board, block, moves, weights):
             move["score"] = -10**6
             continue
 
-        # BUGFIX: clean() mutates; call ONCE and reuse value
         clean_score = test_board.clean()
         lines_cleared_count = score_to_lines(clean_score)
         linescore = clean_score / 100.0
@@ -224,12 +260,20 @@ def score_moves(board, block, moves, weights):
         hole_count = holes(test_board)
         potential = build_tetris(test_board, move, block, lines_cleared_count)
 
+        # === New Heuristic Components ===
+        well_score = right_well_score(test_board)
+        transitions = row_col_transitions(test_board)
+        hole_depth = hole_depth_penalty(test_board)
+
         score_current = (
             weights["lines_weight"] * linescore
             - weights["height_weight"] * height
             - weights["hole_weight"] * hole_count
             - weights["bump_weight"] * bumps
             + weights["potential_weight"] * potential
+            + weights["well_weight"] * well_score
+            - weights["transition_weight"] * transitions
+            - weights["hole_depth_weight"] * hole_depth
         )
 
         if USE_LOOKAHEAD and next_block is not None:
@@ -282,11 +326,9 @@ class Player:
             actions.append(Rotation.Clockwise)
         x_moves = best_move["x_moves"]
         if x_moves > 0:
-            for _ in range(x_moves):
-                actions.append(Direction.Right)
+            actions += [Direction.Right] * x_moves
         elif x_moves < 0:
-            for _ in range(abs(x_moves)):
-                actions.append(Direction.Left)
+            actions += [Direction.Left] * abs(x_moves)
         actions.append(Direction.Drop)
         return actions
 
@@ -301,10 +343,7 @@ class RandomPlayer(Player):
         for y in range(24):
             s = ""
             for x in range(10):
-                if (x, y) in board.cells:
-                    s += "#"
-                else:
-                    s += "."
+                s += "#" if (x, y) in board.cells else "."
             print(s, y)
 
     def choose_action(self, board):
@@ -323,6 +362,7 @@ class RandomPlayer(Player):
 
 
 SelectedPlayer = Player
+
 
 
 
