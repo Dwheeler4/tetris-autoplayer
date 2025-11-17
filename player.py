@@ -6,7 +6,7 @@ BEAM_WIDTH = 10
 USE_LOOKAHEAD = True
 
 DEFAULT_WEIGHTS = {
-  "height_base": 2.077084013339751,
+  "height_base": 3.077084013339751,
   "height_danger": -501.15367427517356,
   "danger_threshold": 4.128936490676556,
   "bumpiness": -12.000750942870829,
@@ -14,11 +14,11 @@ DEFAULT_WEIGHTS = {
   "well_depth": -3.561498010389435,
   "well_penalty": -50.53612768210999,
   "tetris_setup": 20.377539129701354,
-  "clear_1": -20.780053176506035,
+  "clear_1": -30.780053176506035,
   "clear_2": -30.358252498280715,
   "clear_3": -80.0686350277031798,
   "clear_4": 17.67222694804013,
-  "bomb_threshold": 0.80275078808847
+  "bomb_threshold": 0.755078808847
 }
 
 
