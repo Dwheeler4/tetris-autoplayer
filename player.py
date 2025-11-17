@@ -2,23 +2,23 @@ from board import Direction, Rotation, Action, Shape
 from random import Random
 import math
 
-BEAM_WIDTH = 10
+BEAM_WIDTH = 12
 USE_LOOKAHEAD = True
 
 DEFAULT_WEIGHTS = {
-  "height_base": 3.077084013339751,
-  "height_danger": -501.15367427517356,
-  "danger_threshold": 4.128936490676556,
-  "bumpiness": -12.000750942870829,
-  "holes": -100.53876943595337,
-  "well_depth": -3.561498010389435,
-  "well_penalty": -50.53612768210999,
-  "tetris_setup": 20.377539129701354,
-  "clear_1": -31.780053176506035,
-  "clear_2": -30.358252498280715,
-  "clear_3": -80.0686350277031798,
-  "clear_4": 17.67222694804013,
-  "bomb_threshold": 0.755078808847
+  "height_base": 3.08,
+  "height_danger": -501.15,
+  "danger_threshold": 4.13,
+  "bumpiness": -12.00,
+  "holes": -100.54,
+  "well_depth": -3.56,
+  "well_penalty": -50.54,
+  "tetris_setup": 25.38,
+  "clear_1": -31.78,
+  "clear_2": -40.36,
+  "clear_3": -100.07,
+  "clear_4": 17.67,
+  "bomb_threshold": 0.78
 }
 
 
