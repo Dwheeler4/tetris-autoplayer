@@ -19,7 +19,7 @@ class Direction(Enum):
 
 
 class Rotation(Enum):
-    """
+    """p
     Possible rotations available to the player.
     """
 

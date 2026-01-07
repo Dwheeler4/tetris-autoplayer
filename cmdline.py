@@ -4,7 +4,7 @@ from board import Board, Direction, Rotation, Action
 from constants import BOARD_WIDTH, BOARD_HEIGHT, DEFAULT_SEED, INTERVAL,\
     BLOCK_LIMIT
 from exceptions import BlockLimitException
-from player import SelectedPlayer, Player
+from player2 import SelectedPlayer, Player
 from time import sleep
 
 import curses
@@ -198,7 +198,7 @@ def run(window):
                         break
                     elif key == curses.ascii.ESC:
                         raise SystemExit
-            sleep(0.1)
+            
     except BlockLimitException:
         window.addstr(BOARD_HEIGHT//2, 2,
                       "Out of blocks", curses.color_pair(COLOR_NOTHING))

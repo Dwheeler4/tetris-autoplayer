@@ -10,7 +10,7 @@ DEFAULT_WEIGHTS = {
   "height_danger": -501.15367427517356,
   "danger_threshold": 4.128936490676556,
   "bumpiness": -12.000750942870829,
-  "holes": -110.53876943595337,
+  "holes": -120.53876943595337,
   "well_depth": -3.561498010389435,
   "well_penalty": -50.53612768210999,
   "tetris_setup": 20.377539129701354,
@@ -18,7 +18,7 @@ DEFAULT_WEIGHTS = {
   "clear_2": -30.358252498280715,
   "clear_3": -50.0686350277031798,
   "clear_4": 17.67222694804013,
-  "bomb_threshold": 0.85275078808847
+  "bomb_threshold": 0.80275078808847
 }
 
 
@@ -320,6 +320,8 @@ class RandomPlayer:
 
 
 SelectedPlayer = Player
+
+
 
 
 

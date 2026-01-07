@@ -8,7 +8,7 @@ from board import Board, Direction, Rotation, Action, Shape
 from constants import BOARD_HEIGHT, BOARD_WIDTH, DEFAULT_SEED, INTERVAL, \
     BLOCK_LIMIT
 from exceptions import BlockLimitException
-from player import SelectedPlayer, Player
+from player2 import SelectedPlayer, Player
 
 DRAW_INTERVAL = 100
 
@@ -264,7 +264,7 @@ def run():
             for move in board.run(player, adversary):
                 # When not playing manually, allow some time to see the move.
                 if not args.manual:
-                    sleep(0.05)
+                    sleep(0.0)
         except BlockLimitException:
             print("Out of blocks")
         print("Score=", board.score)
