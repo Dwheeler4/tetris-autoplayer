@@ -1,0 +1,12 @@
+# Tetris Autoplayer
+
+An AI “brain” for an existing Tetris game. The AI autonomously selects optimal moves using weighted heuristic functions and a hill-climbing algorithm to maximize gameplay performance. Only the `player.py` file (AI logic) was developed by Daniel Wheeler; the Tetris engine was provided separately.
+
+## Features
+- Developed the `player.py` AI that selects moves based on heuristics (holes, bumpiness, lines cleared)
+- Implemented a hill-climbing algorithm to optimize heuristic weightings
+- Integrated `player.py` with the provided Tetris engine for autonomous gameplay
+- Iteratively tested and refined AI performance
+
+## How It Works
+The AI evaluates all possible moves and scores them using heuristic functions. A hill-climbing algorithm adjusts the weightings to select moves that maximize score while minimizing holes and unevenness on the board.
