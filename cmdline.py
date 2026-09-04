@@ -4,7 +4,7 @@ from board import Board, Direction, Rotation, Action
 from constants import BOARD_WIDTH, BOARD_HEIGHT, DEFAULT_SEED, INTERVAL,\
     BLOCK_LIMIT
 from exceptions import BlockLimitException
-from player2 import SelectedPlayer, Player
+from player import SelectedPlayer, Player
 from time import sleep
 
 import curses

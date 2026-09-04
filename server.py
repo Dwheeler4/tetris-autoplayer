@@ -2,7 +2,7 @@ from adversary import Adversary
 from board import Board, Direction, Rotation, Action, Shape
 from constants import BOARD_HEIGHT, BOARD_WIDTH, PREFIX
 from exceptions import UnknownInstructionException
-from player2 import SelectedPlayer
+from player import SelectedPlayer
 
 
 class RemoteAdversary(Adversary):

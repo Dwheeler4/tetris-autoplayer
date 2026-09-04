@@ -121,7 +121,7 @@ def evaluate(board, lines, w):
 
         well_score = w["well_depth"] * best_depth
 
-   
+
         extra_wells = max(0, len(wells) - 1)
         multi_penalty = w["well_penalty"] * extra_wells
 
@@ -262,8 +262,8 @@ class Player:
     def choose_action(self, board):
 
         if board.cells and board.bombs_remaining > 0:
-            highest = min(y for _, y in board.cells)  
-            ratio = 1.0 - (highest / board.height)    
+            highest = min(y for _, y in board.cells)
+            ratio = 1.0 - (highest / board.height)
             if ratio >= self.weights["bomb_threshold"]:
                 return [Action.Bomb]
 
@@ -320,58 +320,3 @@ class RandomPlayer:
 
 
 SelectedPlayer = Player
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

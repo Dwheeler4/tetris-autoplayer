@@ -1,3 +1,8 @@
 Pipfile
 Pipfile.lock
-__pycache__
+__pycache__/
+*.pyc
+venv/
+.venv/
+tmp/
+_bench*
